@@ -123,7 +123,7 @@ module.exports = APIUtil;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js")
+const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js");
 
 class FollowToggle {
   constructor(el) {
@@ -189,13 +189,19 @@ module.exports = FollowToggle;
 
 const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
 
-
-
 $(function(){
   let $button = $('button.follow-toggle');
 
   $button.each(function(idx,el) {
     new FollowToggle(el);
+  });
+});
+
+$(function(){
+  let $nav = $('nav.users-search');
+
+  $nav.each(function(idx,el) {
+    new UsersSearch(el);
   });
 });
 

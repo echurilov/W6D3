@@ -1,4 +1,4 @@
-const APIUtil = require('./api_util.js')
+const APIUtil = require('./api_util.js');
 
 class FollowToggle {
   constructor(el) {
