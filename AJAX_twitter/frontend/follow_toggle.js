@@ -1,6 +1,4 @@
-// <% if current_user.follows?(user) %>
-//   <button class="follow-toggle" type="button" name="button"></button>
-// <% end %>
+const APIUtil = require('./api_util.js')
 
 class FollowToggle {
   constructor(el) {
@@ -21,8 +19,10 @@ class FollowToggle {
       this.$el.text("Unfollow!!");
     } else if (this.followState === "unfollowing") {
       this.$el.attr("disabled", true);
+      this.$el.text("Unfollowing...");
     } else if (this.followState === "following") {
       this.$el.attr("disabled", true);
+      this.$el.text("Following...");
     }
   }
 
@@ -33,14 +33,7 @@ class FollowToggle {
     if (this.followState === "unfollowed") {
       this.followState = "following";
       this.render();
-      $.ajax({url: `/users/${this.userId}/follow`,
-        method: 'POST',
-        data: {
-          follower_id: this.currentUserId,
-          followee_id: this.userId,
-        },
-        dataType: 'JSON'})
-      .then(() => {
+      APIUtil.followUser(this.userId).then(() => {
         this.followState = "followed";
         this.render();
         console.log("changed to:", this.followState);
@@ -48,10 +41,7 @@ class FollowToggle {
     } else if (this.followState === "followed") {
       this.followState = "unfollowing";
       this.render();
-      $.ajax({url: `/users/${this.userId}/follow`,
-        method: 'DELETE',
-        dataType: 'JSON'})
-      .then(() => {
+      APIUtil.unfollowUser(this.userId).then(() => {
         this.followState = "unfollowed";
         this.render();
         console.log("changed to:", this.followState);
